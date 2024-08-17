@@ -10,10 +10,8 @@
 
 <Router {url}>
   <!-- Home Button -->
-  <div>
-    <Link to="/">
-      <button class="home-button">Home</button>
-    </Link>
+  <div class="home-button">
+    <Link to="/"><span class="home-text">Home</span></Link>
   </div>
 
   <div>
@@ -27,6 +25,7 @@
 <style>
   .home-button {
     position: fixed;
+    width: 50px;
     top: 10px;
     left: 10px;
     padding: 10px 20px;
@@ -41,6 +40,11 @@
 
   .home-button:hover {
     background-color: #0056b3;
+  }
+
+  .home-text {
+    color: white;
+    text-decoration: none;
   }
 
   nav {
