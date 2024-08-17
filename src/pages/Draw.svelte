@@ -152,9 +152,13 @@
   >
   </canvas>
 
-  <button on:click={sendDrawing}>Send Drawing</button>
-  <button on:click={clearCanvas}>Clear Canvas</button>
-  <button on:click={toggleBackground} class:active={includeBackground}>
+  <button on:click={sendDrawing} class="button">Send Drawing</button>
+  <button on:click={clearCanvas} class="button">Clear Canvas</button>
+  <button
+    on:click={toggleBackground}
+    class:active={includeBackground}
+    class="button"
+  >
     {includeBackground ? "Exclude Background" : "Include Background"}
   </button>
 </main>

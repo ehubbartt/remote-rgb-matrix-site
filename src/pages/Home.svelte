@@ -33,37 +33,15 @@
 
 <main>
   <div class="button-container">
-    <button class="button" on:click={toggleOnOff}>
+    <div class="button-primary" on:click={toggleOnOff}>
       {isOn ? "Turn Off" : "Turn On"}
-    </button>
-    <Link to="upload" class="button">Upload Image</Link>
-    <Link to="draw" class="button">Draw Image</Link>
+    </div>
+    <div class="button">
+      <Link to="upload">Upload Image</Link>
+    </div>
+    <div class="button">
+      <Link to="draw">Draw Image</Link>
+    </div>
     <!-- <Link to="presets" class="button">Choose Preset</Link> -->
   </div>
 </main>
-
-<style>
-  .button-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-  }
-
-  .button {
-    width: 80%;
-    padding: 15px;
-    margin: 10px 0;
-    font-size: 18px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-  }
-
-  .button:active {
-    background-color: #0056b3;
-  }
-</style>
