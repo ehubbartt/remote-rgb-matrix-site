@@ -4,7 +4,7 @@
   import { getDatabase, ref, get, set, onValue } from "firebase/database";
   import { firebaseDb } from "../stores/firebase";
   let isOn = false;
-  let brightness = 50; // Default brightness value
+  let brightness = 100; // Default brightness value
   let db;
   let brightnessTimeout; // For the debounce mechanism
   let imageData = []; // To store the current image data
@@ -25,7 +25,7 @@
     const fetchBrightness = async () => {
       const brightnessRef = ref(db, "brightness");
       const snapshot = await get(brightnessRef);
-      brightness = snapshot.exists() ? snapshot.val() : 50;
+      brightness = snapshot.exists() ? snapshot.val() : 100;
     };
 
     fetchIsOnState();
