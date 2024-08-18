@@ -105,7 +105,7 @@
       <input
         id="brightness-slider"
         type="range"
-        min="0"
+        min="1"
         max="100"
         bind:value={brightness}
         on:input={updateBrightness}
