@@ -3,7 +3,7 @@
   import { onMount } from "svelte";
   import { ref, get, set, onValue } from "firebase/database";
   import { firebaseDb } from "../stores/firebase";
-  import Notification from "../components/Notification.svelte";
+  import Notification from "../components/notification.svelte";
 
   let isOn = false;
   let brightness = 100; // Default brightness value
