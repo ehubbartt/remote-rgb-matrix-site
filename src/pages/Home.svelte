@@ -1,8 +1,10 @@
 <script>
   import { Link } from "svelte-routing";
   import { onMount } from "svelte";
-  import { getDatabase, ref, get, set, onValue } from "firebase/database";
+  import { ref, get, set, onValue } from "firebase/database";
   import { firebaseDb } from "../stores/firebase";
+  import Notification from "../components/Notification.svelte";
+
   let isOn = false;
   let brightness = 100; // Default brightness value
   let db;
@@ -10,6 +12,12 @@
   let imageData = []; // To store the current image data
   let previewCanvas;
   let previewCtx;
+  let lastUpdateMs = 0;
+  let initialLoad = true; // To prevent triggering the notification on page load
+
+  // For Notification
+  let show = false;
+  let notificationMessage = "";
 
   onMount(() => {
     const unsubscribe = firebaseDb.subscribe((value) => {
@@ -27,6 +35,25 @@
       const snapshot = await get(brightnessRef);
       brightness = snapshot.exists() ? snapshot.val() : 100;
     };
+
+    // Listen for changes in `lastUpdatedMs` to trigger notification
+    const lastUpdatedMsRef = ref(db, "lastUpdateMs");
+    onValue(lastUpdatedMsRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const newValue = snapshot.val();
+
+        // Only show the notification if it's not the initial load
+        if (newValue !== lastUpdateMs && !initialLoad) {
+          lastUpdateMs = newValue;
+          showNotification("Matrix successfully updated!");
+        }
+
+        // After the first load, allow future notifications
+        if (initialLoad) {
+          initialLoad = false;
+        }
+      }
+    });
 
     fetchIsOnState();
     fetchBrightness();
@@ -85,9 +112,20 @@
       await set(brightnessRef, brightness);
     }, 1000); // 1-second debounce delay
   }
+
+  // Function to show the notification
+  function showNotification(message) {
+    notificationMessage = message;
+    show = true;
+    setTimeout(() => {
+      show = false;
+    }, 2000); // Hide notification after 2 seconds
+  }
 </script>
 
 <main>
+  <Notification {show} message={notificationMessage} />
+
   <div class="button-container">
     <!-- Image Preview -->
     <div class="image-preview">
@@ -124,7 +162,6 @@
     <div class="button">
       <Link to="draw">Draw Image</Link>
     </div>
-    <!-- <Link to="presets" class="button">Choose Preset</Link> -->
   </div>
 </main>
 
